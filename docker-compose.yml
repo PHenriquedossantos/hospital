@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   php:
     build:
@@ -7,10 +5,10 @@ services:
       dockerfile: .docker/php-fpm/Dockerfile
     volumes:
       - ./:/app
-    networks:
-      - laravel
     depends_on:
       - db
+    env_file:
+      - .env
 
   nginx:
     build:
@@ -22,12 +20,11 @@ services:
       - "800:80"
     depends_on:
       - php
-    networks:
-      - laravel
+    env_file:
+      - .env
 
   db:
-    container_name: mysql
-    image: mysql
+    image: mysql:8.0
     volumes:
       - .docker/db_data:/var/lib/mysql
     environment:
@@ -35,11 +32,17 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - 3306:3306
-    networks:
-      - laravel
+    env_file:
+      - .env
 
-networks:
-  laravel:
-    driver: bridge
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
