@@ -2,6 +2,7 @@
 
 echo "Instalando dependências do Composer..."
 composer install --no-interaction --prefer-dist --optimize-autoloader
+php artisan migrate
 
 # Definir permissões corretas
 echo "Definindo permissões para as pastas de cache e armazenamento do Laravel..."
