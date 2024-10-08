@@ -2,14 +2,12 @@
 
 namespace App\Jobs;
 
-use League\Csv\Reader;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue; 
 use Illuminate\Queue\SerializesModels; 
 use PhpOffice\PhpSpreadsheet\IOFactory;
-
 
 class ProcessImportJob implements ShouldQueue
 {
@@ -35,7 +33,7 @@ class ProcessImportJob implements ShouldQueue
             $worksheet = $spreadsheet->getActiveSheet();
     
             $header = $worksheet->toArray()[0];
-            \Log::info("Cabeçalhos CSV: ", $header);
+            \Log::info("Cabeçalhos XLS: ", $header);
     
             foreach ($worksheet->getRowIterator(2) as $row) {
                 $cellIterator = $row->getCellIterator();
@@ -49,23 +47,22 @@ class ProcessImportJob implements ShouldQueue
                 $rowAssociative = array_combine($header, $rowData);
                 \Log::info("Row data: ", $rowAssociative);
     
-                if (!isset($rowAssociative['NOME'])) {
-                    \Log::warning("Chave 'NOME' não encontrada na linha: ", $rowAssociative);
+                if (!isset($rowAssociative['Nome do Paciente'])) {
+                    \Log::warning("Chave 'Nome do Paciente' não encontrada na linha: ", $rowAssociative);
                     continue;
                 }
     
-                $nomePaciente = trim($rowAssociative['NOME']);
+                $nomePaciente = trim($rowAssociative['Nome do Paciente']);
                 $nomeHospital = trim($rowAssociative['Hospital']);
-                $nomePlanoSaude = trim($rowAssociative['Plano']);
+                $nomePlanoSaude = trim($rowAssociative['Plano de Saúde']);
     
                 $hospital = $this->hospitalService->findOrCreate($nomeHospital);
-    
                 $planoSaude = $this->planoSaudeService->findOrCreate($nomePlanoSaude);
     
                 $this->pacienteService->createOrUpdate($nomePaciente, $hospital->id, $planoSaude->id);
             }
         } catch (\Exception $e) {
-            \Log::error("Erro ao processar o arquivo CSV: " . $e->getMessage());
+            \Log::error("Erro ao processar o arquivo XLS: " . $e->getMessage());
         }
     }
 }

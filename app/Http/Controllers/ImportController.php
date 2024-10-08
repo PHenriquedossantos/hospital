@@ -40,7 +40,6 @@ class ImportController extends Controller
 
         return response()->json([
             'message' => 'Arquivo enviado com sucesso e processamento iniciado.',
-            'file_path' => $absolutePath,
         ]);
     }
 }
