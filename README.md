@@ -8,8 +8,9 @@
 * Composer
 
 ## Como rodar o projeto baixado
+```
 git clone git@github.com:PHenriquedossantos/hospital.git
-
+```
 ## .ENV
 renomei o .example.env na raíz do projeto para .env
 O projeto é apenas um teste, basta apenas renomear o .example.env para .env
