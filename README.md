@@ -1,3 +1,6 @@
+
+# Título do Projeto
+
 ## Requesitos
 
 * PHP 8.2 ou superior
@@ -5,23 +8,45 @@
 * Composer
 
 ## Como rodar o projeto baixado
-Duplicar o arquivo ".env.example" e renomear para ".env".<br>
-Alterar no arquivo .env as credenciais do banco de dados.<br>
+git clone git@github.com:PHenriquedossantos/hospital.git
 
-Instalar as dependências do PHP
+## .ENV
+renomei o .example.env na raíz do projeto para .env
+
 ```
-composer install
+O projeto é apenas um teste, basta apenas renomear o .example.env para .env
+Em um sistema real o .env não seria exposta dessa forma.
+lembre apenas de gerar uma nova key para ir na varíavel APP_KEY=
+
+Use esse comando para gerar.
+ docker exec -it hospital-php-1 php artisan key:generate
+
 ```
 
-## Sequencia para criar o projeto
-Cria o projeto com Laravel
+Rodar as migrations
 ```
-composer create-project laravel/laravel .
+docker exec -it hospital-php-1 php artisan migrate
+                    ou
+docker exec -it <nome_ou_id_do_container> /bin/bash
 ```
 
-Alterar no arquivo .env as credenciais do banco de dados<br>
+## ROTAS
 
-Criar o arquivo de rotas para API
 ```
-php artisan install:api
+Essa rota deverá ir com  arquivo.xlsx, rota para gravar no banco de dados os dados da planilha
+POST:  http://localhost:800/api/importar
+
 ```
+
+```
+GET:  http://127.0.0.1:800/api/paciente/2
+Busca por um paciente o retorno json seria
+
+{
+    "nome": "Maria Souza",
+    "hospital": "Hospital Norte",
+    "plano_saude": "Plano B"
+}
+```
+
+
