@@ -23,6 +23,9 @@ RUN apk --no-cache add wget curl git && \
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
     php -r "unlink('composer-setup.php');"
 
+COPY ./.docker/php-fpm/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 9000
 
-ENTRYPOINT ["php-fpm"]
+ENTRYPOINT ["/entrypoint.sh"]
