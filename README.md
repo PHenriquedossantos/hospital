@@ -16,9 +16,9 @@ renomei o .example.env na raíz do projeto para .env
 O projeto é apenas um teste, basta apenas renomear o .example.env para .env
 Em um sistema real o .env não seria exposta dessa forma.
 
+## Inicie o Docker com o seguinte comando
 ```
-Use esse comando para gerar.
- docker exec -it hospital-php-1 php artisan key:generate
+Docker-compose up -d
 
 ```
 
