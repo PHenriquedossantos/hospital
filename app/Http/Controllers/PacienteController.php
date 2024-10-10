@@ -29,4 +29,16 @@ class PacienteController extends Controller
             return response()->json(['message' => $e->getMessage()], 404);
         }
     }
+
+    public function index(Request $request)
+    {
+        try {
+            $perPage = $request->input('per_page', 10);
+            $pacientes = $this->pacienteService->getAllPacientes($perPage);
+    
+            return response()->json($pacientes);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
 }
