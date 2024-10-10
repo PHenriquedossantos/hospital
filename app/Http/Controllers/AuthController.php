@@ -102,5 +102,28 @@ class AuthController extends Controller
 
         return ApiResponse::success('Token válido.');
     }
+    
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
+        $user = \App\Models\User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        $token = $user->createToken($user->name, ['*'])->plainTextToken;
+
+        return ApiResponse::success([
+            'message' => 'Usuário registrado com sucesso!',
+            'user' => $user->name,
+            'email' => $user->email,
+            'token' => $token,
+        ]);
+    }
 }
