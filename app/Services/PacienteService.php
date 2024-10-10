@@ -48,4 +48,15 @@ class PacienteService
             throw new Exception('Erro ao buscar o paciente: ' . $e->getMessage());
         }
     }
+
+    /**
+     * Obtém todos os pacientes paginados.
+     *
+     * @param int $perPage Número de pacientes por página.
+     * @return LengthAwarePaginator
+     */
+    public function getAllPacientes($perPage = 10)
+    {
+        return $this->pacienteModel::select('id', 'nome')->paginate($perPage);
+    }
 }
