@@ -13,8 +13,9 @@ Route::get('/status', function(){
 
 
 Route::post('/importar', [ImportController::class, 'importar'])->middleware('auth:sanctum');
-
 Route::get('/paciente/{id}', [PacienteController::class, 'show'])->middleware('auth:sanctum');
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('/verify-two-factor', [AuthController::class, 'verifyTwoFactor'])->middleware('auth:sanctum');
+
