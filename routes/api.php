@@ -14,6 +14,7 @@ Route::get('/status', function(){
 
 Route::post('/importar', [ImportController::class, 'importar'])->middleware('auth:sanctum');
 Route::get('/paciente/{id}', [PacienteController::class, 'show'])->middleware('auth:sanctum');
+Route::get('/paciente/detalhes/{id}', [PacienteController::class, 'detalhes'])->middleware('auth:sanctum');
 Route::get('/pacientes', [PacienteController::class, 'index'])->middleware('auth:sanctum');
 
 

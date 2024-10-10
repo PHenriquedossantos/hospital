@@ -41,4 +41,21 @@ class PacienteController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
+
+    public function detalhes($id)
+    {
+        try {
+            $paciente = $this->pacienteService->findPacienteById($id);
+
+            return response()->json([
+                'id' => $paciente->id,
+                'nome' => $paciente->nome,
+                'hospital' => $paciente->hospital ? $paciente->hospital->nome : null,
+                'plano_saude' => $paciente->planoSaude ? $paciente->planoSaude->nome : null,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
+    }
+
 }
