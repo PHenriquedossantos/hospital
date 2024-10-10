@@ -18,4 +18,4 @@ Route::get('/paciente/{id}', [PacienteController::class, 'show'])->middleware('a
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('/verify-two-factor', [AuthController::class, 'verifyTwoFactor'])->middleware('auth:sanctum');
-
+Route::post('/validate-token', [AuthController::class, 'validateToken']);

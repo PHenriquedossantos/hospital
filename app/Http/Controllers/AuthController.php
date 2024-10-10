@@ -85,4 +85,22 @@ class AuthController extends Controller
         $request->user()->tokens()->delete();
         return ApiResponse::success('Logout com sucesso');
     }
+
+    public function validateToken(Request $request)
+    {
+        $request->validate([
+            'token' => 'required|string',
+        ]);
+
+        $token = $request->input('token');
+
+        $tokenData = \Laravel\Sanctum\PersonalAccessToken::findToken($token);
+
+        if (!$tokenData) {
+            return ApiResponse::error('Token inválido ou inexistente.', 404);
+        }
+
+        return ApiResponse::success('Token válido.');
+    }
+
 }
