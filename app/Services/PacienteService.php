@@ -59,4 +59,10 @@ class PacienteService
     {
         return $this->pacienteModel::select('id', 'nome')->paginate($perPage);
     }
+
+    public function findPacientesByName($nome)
+    {
+        return Paciente::where('nome', 'LIKE', '%' . $nome . '%')->get();
+    }
+
 }

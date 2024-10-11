@@ -16,6 +16,7 @@ Route::post('/importar', [ImportController::class, 'importar'])->middleware('aut
 Route::get('/paciente/{id}', [PacienteController::class, 'show'])->middleware('auth:sanctum');
 Route::get('/paciente/detalhes/{id}', [PacienteController::class, 'detalhes'])->middleware('auth:sanctum');
 Route::get('/pacientes', [PacienteController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/paciente/nome/{nome}', [PacienteController::class, 'buscarPorNome'])->middleware('auth:sanctum');
 
 
 Route::post('/register', [AuthController::class, 'register']);
