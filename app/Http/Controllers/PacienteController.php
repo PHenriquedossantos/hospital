@@ -58,4 +58,15 @@ class PacienteController extends Controller
         }
     }
 
+    public function buscarPorNome($nome)
+    {
+        try {
+            $pacientes = $this->pacienteService->findPacientesByName($nome);
+
+            return response()->json($pacientes);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+
 }
