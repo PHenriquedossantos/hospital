@@ -62,7 +62,11 @@ class PacienteService
 
     public function findPacientesByName($nome)
     {
-        return Paciente::where('nome', 'LIKE', '%' . $nome . '%')->get();
+        $pacientes = Paciente::where('nome', 'LIKE', '%' . $nome . '%')->get();
+        return $pacientes->filter(function ($paciente) use ($nome) {
+            return stripos($paciente->nome, $nome) !== false;
+        });
     }
+    
 
 }
